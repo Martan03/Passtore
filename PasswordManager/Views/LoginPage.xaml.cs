@@ -9,9 +9,15 @@ public partial class LoginPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void LoginButton_Clicked(object sender, EventArgs e)
+	private async void LoginButton_Clicked(object sender, EventArgs e)
 	{
-        var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 100000);
-        byte[] hash = pbkdf2.GetBytes(20);
+		Models.User user = new();
+		user = user.LoadFromJson();
+
+		if (user is null)
+
+
+		if (user.CheckPassword(PasswordEntry.Text))
+			await Shell.Current.GoToAsync($"{nameof(AllPasswords)}");
     }
 }

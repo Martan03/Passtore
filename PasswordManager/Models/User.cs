@@ -30,6 +30,16 @@ namespace PasswordManager.Models
             File.WriteAllText(_filePath, JsonConvert.SerializeObject(this));
         }
 
+        public void CreateUser(string password)
+        {
+            FileInfo fi = new(_filePath);
+            if (!fi.Directory!.Exists)
+                Directory.CreateDirectory(_filePath);
+
+            _password = HashPassword(password);
+            SaveToJson();
+        }
+
         public bool CheckPassword(string password)
         {
             return string.Equals(_password, HashPassword(password));

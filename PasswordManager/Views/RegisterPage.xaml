@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PasswordManager.Views.LoginPage"
-             Title="Login">
+             x:Class="PasswordManager.Views.RegisterPage"
+             Title="Register">
 
     <VerticalStackLayout Padding="15">
-        <Label x:Name="LoginStatus" IsVisible="false" Margin="0, 0, 0, 10" />
+        <Label x:Name="RegisterStatus" IsVisible="false" Margin="0, 0, 0, 10" />
         <Entry x:Name="PasswordEntry"
                IsPassword="True"
                Placeholder="Password" />
-        <Button Text="Login"
+        <Entry x:Name="PasswordAgainEntry"
+               IsPassword="True"
+               Placeholder="Password again" />
+        <Button Text="Register"
                 Margin="0, 10, 0, 0"
-                Clicked="LoginButton_Clicked"/>
+                Clicked="RegisterButton_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>
