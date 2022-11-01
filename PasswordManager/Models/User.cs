@@ -11,7 +11,7 @@ namespace PasswordManager.Models
 {
     internal class User
     {
-        private string _filePath { get; set; } = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Passtore/user-info.json");
+        private string _filePath { get; set; } = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Passtore\user-info.json");
         [JsonProperty]
         private string _password { get; set; }
 
@@ -24,14 +24,20 @@ namespace PasswordManager.Models
 
         public void SaveToJson()
         {
+            if (!GetFileRights())
+                return;
+
             FileInfo fi = new(_filePath);
             if (!fi.Directory!.Exists)
                 Directory.CreateDirectory(_filePath);
-            File.WriteAllText(_filePath, JsonConvert.SerializeObject(this));
+            File.WriteAllText(_filePath, JsonConvert.SerializeObject(this, Formatting.Indented));
         }
 
         public void CreateUser(string password)
         {
+            if (!GetFileRights())
+                return;
+
             FileInfo fi = new(_filePath);
             if (!fi.Directory!.Exists)
                 Directory.CreateDirectory(_filePath);
@@ -55,6 +61,13 @@ namespace PasswordManager.Models
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8
             ));
+        }
+
+        private static bool GetFileRights()
+        {
+            var rt = Permissions.RequestAsync<Permissions.StorageRead>();
+            rt.Wait();
+            return rt.Result != PermissionStatus.Denied;
         }
     }
 }

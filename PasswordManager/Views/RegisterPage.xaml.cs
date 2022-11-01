@@ -7,11 +7,11 @@ public partial class RegisterPage : ContentPage
 		InitializeComponent();
 	}
 
-	private async void RegisterButton_Clicked(object sender, EventArgs e)
+	private void RegisterButton_Clicked(object sender, EventArgs e)
 	{
 		Models.User user = new();
 
-		if (string.Compare(PasswordEntry.Text, PasswordAgainEntry.Text) != 0)
+		if (!string.Equals(PasswordEntry.Text, PasswordAgainEntry.Text))
 		{
 			RegisterStatus.IsVisible = true;
 			RegisterStatus.Text = "Passwords do not match";
@@ -24,6 +24,6 @@ public partial class RegisterPage : ContentPage
 
 		user.CreateUser(PasswordEntry.Text);
 
-		await Shell.Current.GoToAsync($"{nameof(AllPasswords)}");
+		//await Shell.Current.GoToAsync("..");
 	}
 }
