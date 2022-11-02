@@ -13,6 +13,7 @@ public partial class AddPasswordPage : ContentPage
 	private async void AddPassword_Clicked(object sender, EventArgs e)
 	{
 		Models.AllPasswords allPasswords = new(password);
+		allPasswords.LoadPasswords();
 
 		Models.Password pswd = new();
 		pswd.Name = NameEntry.Text;
