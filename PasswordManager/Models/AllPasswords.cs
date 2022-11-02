@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Models
 {
-    internal class AllPasswords
+    public class AllPasswords
     {
         public ObservableCollection<Password> Passwords { get; set; } = new ObservableCollection<Password>();
 
-        public AllPasswords() =>
-            LoadPasswords();
+        public AllPasswords(string password) =>
+            LoadPasswords(password);
 
-        public void LoadPasswords()
+        public void LoadPasswords(string password)
         {
             Passwords.Clear();
 
@@ -23,6 +23,8 @@ namespace PasswordManager.Models
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
+            if (!File.Exists(Path.Combine(path, "passwords.json")))
+                return;
             dynamic pswds = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(path, "passwords.json")));
 
             foreach (var pswd in pswds)

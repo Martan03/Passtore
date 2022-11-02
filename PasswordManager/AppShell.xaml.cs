@@ -6,7 +6,8 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 
-		Routing.RegisterRoute("register", typeof(Views.RegisterPage));
-		Routing.RegisterRoute("passwords", typeof(Views.AllPasswords));
+		Routing.RegisterRoute("RegistrationPage", typeof(Views.RegisterPage));
+		Routing.RegisterRoute("PasswordsPage", typeof(Views.AllPasswordsPage));
+		Routing.RegisterRoute("AddPasswordPage", typeof(Views.AddPasswordPage));
 	}
 }

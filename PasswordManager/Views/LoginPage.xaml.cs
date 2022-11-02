@@ -17,18 +17,18 @@ public partial class LoginPage : ContentPage
 	private async void RegisterUserIfNull()
 	{
 		if (user is null)
-			await Shell.Current.GoToAsync("/register");
+			await Shell.Current.GoToAsync("RegistrationPage");
 	}
 
 	private async void LoginButton_Clicked(object sender, EventArgs e)
 	{
-		if (!user.CheckPassword(PasswordEntry.Text))
+		if (string.IsNullOrEmpty(PasswordEntry.Text) || !user.CheckPassword(PasswordEntry.Text))
 		{
 			LoginStatus.IsVisible = true;
 			LoginStatus.Text = "Password is incorrect";
 			return;
 		}
 			
-		await Shell.Current.GoToAsync($"passwords?{nameof(AllPasswords.password)}={PasswordEntry.Text}");
+		await Shell.Current.GoToAsync($"PasswordsPage?{nameof(AllPasswordsPage.password)}={PasswordEntry.Text}");
     }
 }

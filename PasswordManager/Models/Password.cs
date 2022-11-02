@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PasswordManager.Models
 {
-    internal class Password
+    public class Password
     {
         public string Name { get; set; }
         public string Url { get; set; }
+        public string Username { get; set; }
         public string Pswd { get; set; }
     }
 }
