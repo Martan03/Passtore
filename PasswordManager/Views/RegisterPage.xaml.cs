@@ -7,7 +7,7 @@ public partial class RegisterPage : ContentPage
 		InitializeComponent();
 	}
 
-	private void RegisterButton_Clicked(object sender, EventArgs e)
+	private async void RegisterButton_Clicked(object sender, EventArgs e)
 	{
 		Models.User user = new();
 
@@ -24,6 +24,6 @@ public partial class RegisterPage : ContentPage
 
 		user.CreateUser(PasswordEntry.Text);
 
-		//await Shell.Current.GoToAsync("..");
+		await Shell.Current.GoToAsync("passwords");
 	}
 }

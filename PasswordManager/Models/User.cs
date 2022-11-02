@@ -9,17 +9,24 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace PasswordManager.Models
 {
-    internal class User
+    public class User
     {
-        private string _filePath { get; set; } = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Passtore\user-info.json");
+        private string _dataPath { get; } = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Passtore");
+        private string _filePath { get; } = Path.Combine(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Passtore"), "user-info.json");
         [JsonProperty]
         private string _password { get; set; }
+
+        public User()
+        {
+            Directory.CreateDirectory(_dataPath);
+        }
 
         public User LoadFromJson()
         {
             if (!File.Exists(_filePath))
                 return null;
-            return JsonConvert.DeserializeObject<User>(_filePath) ?? null;
+
+            return JsonConvert.DeserializeObject<User>(File.ReadAllText(_filePath)) ?? null;
         }
 
         public void SaveToJson()
@@ -27,21 +34,11 @@ namespace PasswordManager.Models
             if (!GetFileRights())
                 return;
 
-            FileInfo fi = new(_filePath);
-            if (!fi.Directory!.Exists)
-                Directory.CreateDirectory(_filePath);
-            File.WriteAllText(_filePath, JsonConvert.SerializeObject(this, Formatting.Indented));
+            File.WriteAllText(_filePath, JsonConvert.SerializeObject(this));
         }
 
         public void CreateUser(string password)
         {
-            if (!GetFileRights())
-                return;
-
-            FileInfo fi = new(_filePath);
-            if (!fi.Directory!.Exists)
-                Directory.CreateDirectory(_filePath);
-
             _password = HashPassword(password);
             SaveToJson();
         }
@@ -53,7 +50,7 @@ namespace PasswordManager.Models
 
         private string HashPassword(string password)
         {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
+            byte[] salt = Encoding.ASCII.GetBytes("Cda6ZgNVluChtzseyq9uMQ==");
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,

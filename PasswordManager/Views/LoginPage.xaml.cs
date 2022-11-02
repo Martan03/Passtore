@@ -22,8 +22,8 @@ public partial class LoginPage : ContentPage
 
 	private async void LoginButton_Clicked(object sender, EventArgs e)
 	{
-		if (string.Equals(PasswordEntry.Text, "test"))
-			await Shell.Current.GoToAsync($"{nameof(AllPasswords)}");
+		if (user.CheckPassword(PasswordEntry.Text))
+			await Shell.Current.GoToAsync("passwords");
 		LoginStatus.IsVisible = true;
 		LoginStatus.Text = "Password is incorrect";
     }
