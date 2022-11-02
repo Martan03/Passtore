@@ -13,10 +13,11 @@ public partial class AllPasswordsPage : ContentPage
 	protected override void OnAppearing()
 	{
 		BindingContext = new Models.AllPasswords(password);
+		((Models.AllPasswords)BindingContext).LoadPasswords();
 	}
 
 	private async void Add_Clicked(object sender, EventArgs e)
 	{
-		await Shell.Current.GoToAsync("AddPasswordPage");
+		await Shell.Current.GoToAsync($"AddPasswordPage?{nameof(AddPasswordPage.password)}={password}");
 	}
 }

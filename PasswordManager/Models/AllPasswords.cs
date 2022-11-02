@@ -10,12 +10,15 @@ namespace PasswordManager.Models
 {
     public class AllPasswords
     {
+        private string password { get; set; }
+
+        [JsonProperty]
         public ObservableCollection<Password> Passwords { get; set; } = new ObservableCollection<Password>();
 
         public AllPasswords(string password) =>
-            LoadPasswords(password);
+            this.password = password;
 
-        public void LoadPasswords(string password)
+        public void LoadPasswords()
         {
             Passwords.Clear();
 
@@ -25,10 +28,21 @@ namespace PasswordManager.Models
 
             if (!File.Exists(Path.Combine(path, "passwords.json")))
                 return;
-            dynamic pswds = JsonConvert.DeserializeObject(File.ReadAllText(Path.Combine(path, "passwords.json")));
+            var pswds = JsonConvert.DeserializeObject<AllPasswords>(File.ReadAllText(Path.Combine(path, "passwords.json")));
 
-            foreach (var pswd in pswds)
+            foreach (var pswd in pswds.Passwords)
                 Passwords.Add(pswd);
+        }
+
+        public void AddPassword(Password pswd)
+        {
+            Passwords.Add(pswd);
+
+            string path = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Passtore");
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            File.WriteAllText(Path.Combine(path, "passwords.json"), JsonConvert.SerializeObject(this));
         }
     }
 }

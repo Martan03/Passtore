@@ -24,6 +24,6 @@ public partial class RegisterPage : ContentPage
 
 		user.CreateUser(PasswordEntry.Text);
 
-		await Shell.Current.GoToAsync("PasswordsPage");
-	}
+        await Shell.Current.GoToAsync($"PasswordsPage?{nameof(AllPasswordsPage.password)}={PasswordEntry.Text}");
+    }
 }
