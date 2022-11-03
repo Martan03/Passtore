@@ -23,10 +23,10 @@ public partial class AllPasswordsPage : ContentPage
 
 	private async void PasswordCard_Tapped(object sender, EventArgs e)
 	{
-		var password = ((VisualElement)sender).BindingContext as Models.Password;
-		if (password is null)
+		var pswd = ((VisualElement)sender).BindingContext as Models.Password;
+		if (pswd is null)
 			return;
 
-        await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.id)}={password.Name}&{nameof(PasswordPage.password)}={password.Pswd}");
+        await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.id)}={pswd.Name}&{nameof(PasswordPage.password)}={password}");
     }
 }

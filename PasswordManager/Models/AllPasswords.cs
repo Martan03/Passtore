@@ -28,7 +28,9 @@ namespace PasswordManager.Models
 
             if (!File.Exists(Path.Combine(path, "passwords.json")))
                 return;
-            var pswds = JsonConvert.DeserializeObject<AllPasswords>(File.ReadAllText(Path.Combine(path, "passwords.json")));
+
+            string decrypted = StringCipher.Decrypt(File.ReadAllText(Path.Combine(path, "passwords.json")), password);
+            var pswds = JsonConvert.DeserializeObject<AllPasswords>(decrypted);
 
             foreach (var pswd in pswds.Passwords)
                 Passwords.Add(pswd);
@@ -42,7 +44,9 @@ namespace PasswordManager.Models
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
-            File.WriteAllText(Path.Combine(path, "passwords.json"), JsonConvert.SerializeObject(this));
+            string encrypted = StringCipher.Encrypt(JsonConvert.SerializeObject(this), password);
+
+            File.WriteAllText(Path.Combine(path, "passwords.json"), encrypted);
         }
 
         public Password GetPassword(string name)
