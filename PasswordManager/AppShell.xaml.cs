@@ -8,6 +8,6 @@ public partial class AppShell : Shell
 
 		Routing.RegisterRoute("RegistrationPage", typeof(Views.RegisterPage));
 		Routing.RegisterRoute("PasswordsPage", typeof(Views.AllPasswordsPage));
-		Routing.RegisterRoute("AddPasswordPage", typeof(Views.AddPasswordPage));
+		Routing.RegisterRoute("PasswordPage", typeof(Views.PasswordPage));
 	}
 }

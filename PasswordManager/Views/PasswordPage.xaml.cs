@@ -1,14 +1,28 @@
 namespace PasswordManager.Views;
 
 [QueryProperty(nameof(password), nameof(password))]
-public partial class AddPasswordPage : ContentPage
+[QueryProperty(nameof(id), nameof(id))]
+public partial class PasswordPage : ContentPage
 {
 	public string password { get; set; }
+	public string id { get; set; }
+	private Models.Password pswd { get; set; } = new();
 
-	public AddPasswordPage()
+	public PasswordPage()
 	{
 		InitializeComponent();
 	}
+
+	protected override void OnAppearing()
+    {
+        Models.AllPasswords allPasswords = new(password);
+        allPasswords.LoadPasswords();
+
+		if (!string.IsNullOrEmpty(id))
+			pswd = allPasswords.GetPassword(id);
+
+		BindingContext = pswd;
+    }
 
 	private async void AddPassword_Clicked(object sender, EventArgs e)
 	{

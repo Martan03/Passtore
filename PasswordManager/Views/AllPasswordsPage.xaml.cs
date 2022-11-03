@@ -18,11 +18,15 @@ public partial class AllPasswordsPage : ContentPage
 
 	private async void Add_Clicked(object sender, EventArgs e)
 	{
-		await Shell.Current.GoToAsync($"AddPasswordPage?{nameof(AddPasswordPage.password)}={password}");
+		await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.password)}={password}");
 	}
 
-	private void PasswordCard_Tapped(object sender, EventArgs e)
+	private async void PasswordCard_Tapped(object sender, EventArgs e)
 	{
+		var password = ((VisualElement)sender).BindingContext as Models.Password;
+		if (password is null)
+			return;
 
-	}
+        await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.id)}={password.Name}&{nameof(PasswordPage.password)}={password.Pswd}");
+    }
 }

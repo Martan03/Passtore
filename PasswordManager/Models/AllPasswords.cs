@@ -44,5 +44,10 @@ namespace PasswordManager.Models
 
             File.WriteAllText(Path.Combine(path, "passwords.json"), JsonConvert.SerializeObject(this));
         }
+
+        public Password GetPassword(string name)
+        {
+            return Passwords.FirstOrDefault(p => p.Name == name);
+        }
     }
 }
