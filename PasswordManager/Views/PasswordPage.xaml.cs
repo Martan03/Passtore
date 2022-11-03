@@ -19,7 +19,10 @@ public partial class PasswordPage : ContentPage
         allPasswords.LoadPasswords();
 
 		if (!string.IsNullOrEmpty(id))
+		{
 			pswd = allPasswords.GetPassword(id);
+			AddPasswordButton.Text = "Edit password";
+		}
 
 		BindingContext = pswd;
     }
@@ -38,5 +41,10 @@ public partial class PasswordPage : ContentPage
 		allPasswords.AddPassword(pswd);
 
 		await Shell.Current.GoToAsync("..");
+	}
+
+	private void ShowPassword_Clicked(object sender, EventArgs e)
+	{
+		PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
 	}
 }
