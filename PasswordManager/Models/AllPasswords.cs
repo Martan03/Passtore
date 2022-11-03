@@ -18,6 +18,9 @@ namespace PasswordManager.Models
         public AllPasswords(string password) =>
             this.password = password;
 
+        /// <summary>
+        /// Loads all passwords from encrypted file
+        /// </summary>
         public void LoadPasswords()
         {
             Passwords.Clear();
@@ -36,10 +39,45 @@ namespace PasswordManager.Models
                 Passwords.Add(pswd);
         }
 
+        /// <summary>
+        /// Adds passwords to the list and saves to file
+        /// </summary>
+        /// <param name="pswd"></param>
         public void AddPassword(Password pswd)
         {
+            if (Passwords.Count == 0)
+                pswd.Id = 0;
+            else
+                pswd.Id = Passwords.Last().Id + 1;
             Passwords.Add(pswd);
 
+            SavePasswords();
+        }
+
+        /// <summary>
+        /// Edits password, if passwords with ID is not found, adds it
+        /// </summary>
+        /// <param name="pswd"></param>
+        public void EditPassword(Password pswd)
+        {
+            for (int i = 0; i < Passwords.Count; ++i)
+            {
+                if (Passwords[i].Id == pswd.Id)
+                {
+                    Passwords[i] = pswd;
+                    SavePasswords();
+                    return;
+                }
+            }
+
+            AddPassword(pswd);
+        }
+
+        /// <summary>
+        /// Saves passwords to file and encrypts it
+        /// </summary>
+        private void SavePasswords()
+        {
             string path = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Passtore");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -49,9 +87,10 @@ namespace PasswordManager.Models
             File.WriteAllText(Path.Combine(path, "passwords.json"), encrypted);
         }
 
-        public Password GetPassword(string name)
+        // Gets password with given ID
+        public Password GetPassword(int Id)
         {
-            return Passwords.FirstOrDefault(p => p.Name == name);
+            return Passwords.FirstOrDefault(p => p.Id == Id);
         }
     }
 }

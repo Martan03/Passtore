@@ -27,6 +27,6 @@ public partial class AllPasswordsPage : ContentPage
 		if (pswd is null)
 			return;
 
-        await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.id)}={pswd.Name}&{nameof(PasswordPage.password)}={password}");
+        await Shell.Current.GoToAsync($"PasswordPage?{nameof(PasswordPage.id)}={pswd.Id}&{nameof(PasswordPage.password)}={password}");
     }
 }

@@ -5,7 +5,7 @@ namespace PasswordManager.Views;
 public partial class PasswordPage : ContentPage
 {
 	public string password { get; set; }
-	public string id { get; set; }
+	public int id { get; set; } = -1;
 	private Models.Password pswd { get; set; } = new();
 
 	public PasswordPage()
@@ -18,7 +18,9 @@ public partial class PasswordPage : ContentPage
         Models.AllPasswords allPasswords = new(password);
         allPasswords.LoadPasswords();
 
-		if (!string.IsNullOrEmpty(id))
+		pswd.Id = -1;
+
+		if (id != -1)
 		{
 			pswd = allPasswords.GetPassword(id);
 			AddPasswordButton.Text = "Edit password";
@@ -32,13 +34,7 @@ public partial class PasswordPage : ContentPage
 		Models.AllPasswords allPasswords = new(password);
 		allPasswords.LoadPasswords();
 
-		Models.Password pswd = new();
-		pswd.Name = NameEntry.Text;
-		pswd.Url = WebsiteEntry.Text;
-		pswd.Username = UsernameEntry.Text;
-		pswd.Pswd = PasswordEntry.Text;
-
-		allPasswords.AddPassword(pswd);
+		allPasswords.EditPassword(pswd);
 
 		await Shell.Current.GoToAsync("..");
 	}
