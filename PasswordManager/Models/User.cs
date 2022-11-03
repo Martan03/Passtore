@@ -23,7 +23,7 @@ namespace PasswordManager.Models
 
         public User LoadFromJson()
         {
-            if (!File.Exists(_filePath))
+            if (!File.Exists(_filePath) || !GetStorageReadRight())
                 return null;
 
             return JsonConvert.DeserializeObject<User>(File.ReadAllText(_filePath)) ?? null;
@@ -31,7 +31,7 @@ namespace PasswordManager.Models
 
         public void SaveToJson()
         {
-            if (!GetFileRights())
+            if (!GetStorageWriteRight())
                 return;
 
             File.WriteAllText(_filePath, JsonConvert.SerializeObject(this));
@@ -60,9 +60,16 @@ namespace PasswordManager.Models
             ));
         }
 
-        private static bool GetFileRights()
+        private static bool GetStorageReadRight()
         {
             var rt = Permissions.RequestAsync<Permissions.StorageRead>();
+            rt.Wait();
+            return rt.Result != PermissionStatus.Denied;
+        }
+
+        private static bool GetStorageWriteRight()
+        {
+            var rt = Permissions.RequestAsync<Permissions.StorageWrite>();
             rt.Wait();
             return rt.Result != PermissionStatus.Denied;
         }

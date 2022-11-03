@@ -20,4 +20,9 @@ public partial class AllPasswordsPage : ContentPage
 	{
 		await Shell.Current.GoToAsync($"AddPasswordPage?{nameof(AddPasswordPage.password)}={password}");
 	}
+
+	private void PasswordCard_Tapped(object sender, EventArgs e)
+	{
+
+	}
 }
