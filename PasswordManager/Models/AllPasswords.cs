@@ -12,6 +12,7 @@ namespace PasswordManager.Models
     {
         private string password { get; set; }
 
+        // List with all passwords
         [JsonProperty]
         public ObservableCollection<Password> Passwords { get; set; } = new ObservableCollection<Password>();
 

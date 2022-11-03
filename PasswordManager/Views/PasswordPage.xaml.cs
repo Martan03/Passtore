@@ -1,5 +1,6 @@
 namespace PasswordManager.Views;
 
+// adds $_GET paramater (basically) - "?password=something"
 [QueryProperty(nameof(password), nameof(password))]
 [QueryProperty(nameof(id), nameof(id))]
 public partial class PasswordPage : ContentPage
@@ -20,6 +21,7 @@ public partial class PasswordPage : ContentPage
 
 		pswd.Id = -1;
 
+		// Get password to edit when id is not -1
 		if (id != -1)
 		{
 			pswd = allPasswords.GetPassword(id);
@@ -34,6 +36,7 @@ public partial class PasswordPage : ContentPage
 		Models.AllPasswords allPasswords = new(password);
 		allPasswords.LoadPasswords();
 
+		// Calls edit function even when adding, it will work it out :)
 		allPasswords.EditPassword(pswd);
 
 		await Shell.Current.GoToAsync("..");

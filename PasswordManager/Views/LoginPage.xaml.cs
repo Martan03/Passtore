@@ -16,12 +16,14 @@ public partial class LoginPage : ContentPage
 
 	private async void RegisterUserIfNull()
 	{
+		// If user doesn't exist, go to registration page
 		if (user is null)
 			await Shell.Current.GoToAsync("RegistrationPage");
 	}
 
 	private async void LoginButton_Clicked(object sender, EventArgs e)
 	{
+		// Checks if passwords is correct
 		if (string.IsNullOrEmpty(PasswordEntry.Text) || !user.CheckPassword(PasswordEntry.Text))
 		{
 			LoginStatus.IsVisible = true;

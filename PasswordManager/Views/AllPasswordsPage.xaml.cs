@@ -12,6 +12,7 @@ public partial class AllPasswordsPage : ContentPage
 
 	protected override void OnAppearing()
 	{
+		// Loads passwords to the collection view
 		BindingContext = new Models.AllPasswords(password);
 		((Models.AllPasswords)BindingContext).LoadPasswords();
 	}
