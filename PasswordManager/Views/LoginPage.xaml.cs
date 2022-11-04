@@ -1,4 +1,6 @@
 using System.Security.Cryptography;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Platform;
 
 namespace PasswordManager.Views;
 
@@ -30,7 +32,12 @@ public partial class LoginPage : ContentPage
 			LoginStatus.Text = "Password is incorrect";
 			return;
 		}
-			
-		await Shell.Current.GoToAsync($"PasswordsPage?{nameof(AllPasswordsPage.password)}={PasswordEntry.Text}");
+
+#if ANDROID
+        if (Platform.CurrentActivity.CurrentFocus != null)
+            Platform.CurrentActivity.HideKeyboard(Platform.CurrentActivity.CurrentFocus);
+#endif
+
+        await Shell.Current.GoToAsync($"PasswordsPage?{nameof(AllPasswordsPage.password)}={PasswordEntry.Text}");
     }
 }

@@ -43,7 +43,7 @@ namespace PasswordManager.Models
         /// <summary>
         /// Adds passwords to the list and saves to file
         /// </summary>
-        /// <param name="pswd"></param>
+        /// <param name="pswd">Password to be add</param>
         public void AddPassword(Password pswd)
         {
             if (Passwords.Count == 0)
@@ -58,7 +58,7 @@ namespace PasswordManager.Models
         /// <summary>
         /// Edits password, if passwords with ID is not found, adds it
         /// </summary>
-        /// <param name="pswd"></param>
+        /// <param name="pswd">Password to be edited</param>
         public void EditPassword(Password pswd)
         {
             for (int i = 0; i < Passwords.Count; ++i)
@@ -72,6 +72,23 @@ namespace PasswordManager.Models
             }
 
             AddPassword(pswd);
+        }
+
+        /// <summary>
+        /// Removes passwords from saved passwords
+        /// </summary>
+        /// <param name="pswd">Passwords to be removed</param>
+        public void RemovePassword(Password pswd)
+        {
+            for (int i = 0; i < Passwords.Count; ++i)
+            {
+                if (Passwords[i].Id == pswd.Id)
+                {
+                    Passwords.RemoveAt(i);
+                    SavePasswords();
+                    return;
+                }
+            }
         }
 
         /// <summary>

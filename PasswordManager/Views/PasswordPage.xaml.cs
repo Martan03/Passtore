@@ -52,4 +52,14 @@ public partial class PasswordPage : ContentPage
 		await Clipboard.Default.SetTextAsync(pswd.Pswd);
 		CopyButton.Text = "Copied";
 	}
+
+	private async void RemovePassword_Clicked(object sender, EventArgs e)
+	{
+        Models.AllPasswords allPasswords = new(password);
+        allPasswords.LoadPasswords();
+
+		allPasswords.RemovePassword(pswd);
+
+		await Shell.Current.GoToAsync("..");
+    }
 }
