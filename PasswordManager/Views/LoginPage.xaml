@@ -2,9 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PasswordManager.Views.LoginPage"
-             Title="Login">
+             Shell.NavBarIsVisible="False">
 
-    <VerticalStackLayout Padding="15">
+    <Grid HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand"
+          RowDefinitions="Auto, *">
+
+        <StackLayout HorizontalOptions="Center"
+                     Margin="0, 20">
+            <Label Text="PASSTORE"
+                   FontSize="40" />
+        </StackLayout>
+
+        <Frame Grid.Row="1"
+               CornerRadius="45"
+               Margin="0, 0, 0, -40"
+               HasShadow="True"
+               Padding="20, 35">
+            
+            <VerticalStackLayout>
+                <Label x:Name="LoginStatus"
+                       IsVisible="False"
+                       FontSize="16"
+                       Margin="3, 0, 0, 10" />
+                <Border Stroke="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray900}}"
+                        Padding="10, 2">
+                    
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10" />
+                    </Border.StrokeShape>
+                    
+                    <Entry x:Name="PasswordEntry"
+                           FontSize="16"
+                           CharacterSpacing="0.3"
+                           IsPassword="True"
+                           Placeholder="Password" />
+                </Border>
+                <Button Text="Login"
+                        Margin="0, 10, 0, 0"
+                        Clicked="LoginButton_Clicked" />
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+
+        <!--VerticalStackLayout Padding="15"
+                         VerticalOptions="Center"
+                         BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray950}}">
         <Label x:Name="LoginStatus" IsVisible="false" Margin="0, 0, 0, 10" />
         <Entry x:Name="PasswordEntry"
                IsPassword="True"
@@ -12,5 +56,5 @@
         <Button Text="Login"
                 Margin="0, 10, 0, 0"
                 Clicked="LoginButton_Clicked"/>
-    </VerticalStackLayout>
+    </VerticalStackLayout-->
 </ContentPage>
