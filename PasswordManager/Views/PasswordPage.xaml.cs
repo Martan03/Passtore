@@ -46,4 +46,10 @@ public partial class PasswordPage : ContentPage
 	{
 		PasswordEntry.IsPassword = !PasswordEntry.IsPassword;
 	}
+
+	private async void CopyPassword_Clicked(object sender, EventArgs e)
+	{
+		await Clipboard.Default.SetTextAsync(pswd.Pswd);
+		CopyButton.Text = "Copied";
+	}
 }
