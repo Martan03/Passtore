@@ -21,3 +21,7 @@ And this is how All passwords page will look after adding a password:
 When you click on a password, you will se the same page as when you were adding password. From this page, you can remove password (top right corner) or copy/show password
 
 ![image](https://user-images.githubusercontent.com/46300167/200118188-ef7d33c2-4274-4d26-8324-56bf5fa996dc.png)
+
+Links:  
+[Author GitHub](https://github.com/Martan03)  
+[Author website](https://martan03.github.io/Portfolio/)
